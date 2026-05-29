@@ -1,843 +1,857 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>QUINTALYS — Foodshaker ISARA 2026</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>QUINTALYS · Foodshaker — Présentation v2</title>
+
+<link rel="stylesheet" href="deck-styles-v2.css" />
+
 <style>
-:root {
-  --bg:      #0A0B0F;
-  --bg2:     #12131C;
-  --gold:    #C9A96E;
-  --gold-l:  #E8D5A3;
-  --gold-d:  #7A623A;
-  --green:   #142619;
-  --green-m: #204030;
-  --green-l: #356A52;
-  --pharm:   #0C0E22;
-  --cold:    #48589E;
-  --ww:      #F0EBE1;
-  --cream:   #F5F0E8;
-  --grey:    #828282;
-  --grey-d:  #282838;
-  --fh: 'Playfair Display', Georgia, serif;
-  --fb: 'Inter', Calibri, sans-serif;
-}
-*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-body {
-  background: var(--bg);
-  color: var(--ww);
-  font-family: var(--fb);
-  overflow: hidden;
-  width: 100vw; height: 100vh;
-  cursor: default;
-  user-select: none;
-}
-#deck { position: relative; width:100%; height:100%; }
-
-/* ── Slides ── */
-.slide {
-  position: absolute; inset: 0;
-  opacity: 0; pointer-events: none;
-  transition: opacity 0.4s ease;
-  overflow: hidden;
-  background: var(--bg);
-}
-.slide.active { opacity: 1; pointer-events: all; }
-
-/* ── Animation engine ── */
-.anim {
-  opacity: 0;
-  transform: translateY(10px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
-}
-.anim.slow { transition-duration: 1.2s; }
-.anim.fast { transition-duration: 0.4s; }
-.anim.fx   { transition-timing-function: cubic-bezier(.22,.68,0,1.2); }
-.anim.revealed { opacity: 1; transform: none; }
-
-/* SVG line draw */
-.drawline {
-  stroke-dasharray: 900;
-  stroke-dashoffset: 900;
-  transition: stroke-dashoffset 0.8s ease 0.15s;
-}
-.anim.revealed .drawline { stroke-dashoffset: 0; }
-
-/* ── Navigation ── */
-#nav {
-  position: fixed; bottom: 22px; right: 24px;
-  display: flex; align-items: center; gap: 14px;
-  z-index: 999;
-}
-#counter { font-size: 11px; color: var(--grey); letter-spacing: .1em; font-weight:300; }
-.nbtn {
-  background: none; border: 1px solid var(--grey-d);
-  color: var(--grey); width:34px; height:34px;
-  border-radius: 50%; cursor: pointer; font-size:14px;
-  display:flex; align-items:center; justify-content:center;
-  transition: all .2s;
-}
-.nbtn:hover { border-color: var(--gold); color: var(--gold); }
-#bar {
-  position: fixed; bottom:0; left:0; height:2px;
-  background: var(--gold); transition: width .35s ease; z-index:999;
-}
-#hint {
-  position: fixed; bottom:20px; left:50%; transform:translateX(-50%);
-  font-size:10px; color: rgba(130,130,130,.35); font-style:italic;
-  letter-spacing:.08em; pointer-events:none; transition: opacity 1.5s;
-}
-
-/* ── Shared title pattern ── */
-.stitle {
-  position: absolute; top: 4%; left:50%; transform:translateX(-50%);
-  font-family: var(--fh); font-size: clamp(20px,3vw,36px);
-  color: var(--gold-l); text-align: center; width:85%; white-space:nowrap;
-}
-.sdiv {
-  position: absolute; top:17%;
-  left:24%; right:24%; height:1px;
-  background: linear-gradient(to right, transparent, var(--gold), transparent);
-}
-
-/* ══════════════════════════════════════
-   SLIDE 1 — COUVERTURE
-══════════════════════════════════════ */
-#s1-blob1 {
-  position:absolute; right:-8%; top:-18%;
-  width:62%; height:130%;
-  background: radial-gradient(ellipse 65% 75% at 55% 48%, var(--green-m) 0%, var(--green) 52%, transparent 78%);
-  border-radius: 65% 35% 52% 48% / 44% 58% 52% 46%;
-}
-#s1-blob2 {
-  position:absolute; right:-3%; top:8%;
-  width:40%; height:78%;
-  background: radial-gradient(ellipse at center, var(--green-m) 0%, transparent 68%);
-  border-radius: 48% 52% 38% 62% / 56% 44% 62% 38%;
-  opacity:.55;
-}
-#s1-warm {
-  position:absolute; right:0; top:0; width:52%; height:100%;
-  background: linear-gradient(to right, transparent, rgba(18,12,4,.45));
-}
-#s1-vl {
-  position:absolute; left:56px; top:13%; height:74%;
-  width:2px;
-  background: linear-gradient(to bottom, transparent, var(--gold) 18%, var(--gold) 82%, transparent);
-}
-#s1-title {
-  position:absolute; left:82px; top:14%;
-  font-family:var(--fh); font-size:clamp(50px,7.2vw,90px);
-  font-weight:700; color:var(--gold-l); letter-spacing:.05em; line-height:1;
-}
-#s1-div {
-  position:absolute; left:82px; top:43%;
-  width:45%; height:1px;
-  background: linear-gradient(to right, var(--gold), transparent);
-}
-#s1-sub {
-  position:absolute; left:82px; top:46%;
-  width:54%;
-  font-family:var(--fh); font-size:clamp(16px,2.3vw,27px);
-  line-height:1.45; color:var(--ww);
-}
-#s1-sub em { color:var(--gold-l); font-style:normal; }
-#s1-name {
-  position:absolute; left:82px; bottom:9%;
-  font-size:13px; color:var(--grey); font-weight:300;
-  letter-spacing:.07em; font-style:italic;
-}
-#s1-logo {
-  position:absolute; right:58px; bottom:7%;
-  width:62px; height:62px; border-radius:50%;
-  background:var(--gold);
-  display:flex; align-items:center; justify-content:center;
-  font-family:var(--fh); font-size:26px; font-weight:700; color:var(--bg);
-}
-
-/* ══════════════════════════════════════
-   SLIDE 2 — CONSTATS + PARADOXE
-══════════════════════════════════════ */
-#s2-left  { position:absolute; left:0; top:0; width:47%; height:100%; background:var(--pharm); }
-#s2-right { position:absolute; right:0; top:0; width:47%; height:100%; background:var(--green); }
-#s2-cdiv  {
-  position:absolute; left:50%; top:3%; transform:translateX(-50%);
-  width:1px; height:94%;
-  background: linear-gradient(to bottom, transparent, var(--gold) 12%, var(--gold) 88%, transparent);
-}
-/* pills left */
-.s2p { position:absolute; background:var(--cold); border-radius:40px; opacity:.75; }
-#p1 { left:8%;  top:16%; width:13%; height:5.5%; }
-#p2 { left:22%; top:13%; width:11%; height:5.5%; }
-#p3 { left:12%; top:26%; width:13%; height:5.5%; }
-#p4 { left:30%; top:27%; width:7%;  height:9%; border-radius:50%; }
-#p5 { left:7%;  top:38%; width:9%;  height:11%; border-radius:50%; background:rgba(60,72,158,.6); }
-#s2-llbl {
-  position:absolute; left:3%; bottom:19%; width:43%;
-  text-align:center; font-size:11px; letter-spacing:.12em;
-  color:var(--cold); text-transform:uppercase; font-weight:600; line-height:1.8;
-}
-/* leaves right */
-.s2l { position:absolute; background:var(--green-m); opacity:.85; }
-#l1 { left:55%; top:10%; width:18%; height:30%; border-radius:58% 42% 65% 35% / 48% 55% 45% 52%; }
-#l2 { left:74%; top:12%; width:13%; height:22%; border-radius:50% 50% 60% 40% / 55% 45% 55% 45%; }
-#l3 { left:62%; top:38%; width:15%; height:24%; border-radius:62% 38% 52% 48% / 50% 58% 42% 50%; }
-#l4 { left:81%; top:33%; width:17%; height:28%; border-radius:45% 55% 48% 52% / 52% 48% 58% 42%; }
-#s2-rlbl {
-  position:absolute; right:3%; bottom:19%; width:43%;
-  text-align:center; font-size:11px; letter-spacing:.12em;
-  color:var(--green-l); text-transform:uppercase; font-weight:600; line-height:1.8;
-}
-#s2-qbox {
-  position:absolute; left:50%; bottom:5%; transform:translateX(-50%);
-  width:70%; background:rgba(6,7,16,.96);
-  border:1px solid var(--gold-d); padding:20px 30px; border-radius:2px;
-}
-#s2-qbox p {
-  font-family:var(--fh); font-size:clamp(13px,1.8vw,20px);
-  color:var(--gold-l); text-align:center; line-height:1.55;
-}
-
-/* ══════════════════════════════════════
-   SLIDE 3 — CUISINE = FORMULATION
-══════════════════════════════════════ */
-#s3-svg { position:absolute; top:0; left:0; width:100%; height:100%; }
-
-/* ══════════════════════════════════════
-   SLIDE 4 — INFUSION-CUISSON
-══════════════════════════════════════ */
-#s4-steps {
-  position:absolute; top:22%; left:4%; right:4%; bottom:7%;
-  display:flex; align-items:center; justify-content:center; gap:0;
-}
-.s4step {
-  flex:1; max-width:29%; height:78%;
-  border:1px solid var(--gold-d);
-  display:flex; flex-direction:column;
-  align-items:center; justify-content:center;
-  padding:22px 18px; text-align:center;
-}
-.s4step:nth-child(1){background:var(--green);}
-.s4step:nth-child(3){background:var(--green-m);}
-.s4step:nth-child(5){background:rgba(36,66,50,.9);}
-.s4num { font-family:var(--fh); font-size:clamp(26px,3.8vw,46px); color:var(--gold); font-weight:700; line-height:1; }
-.s4ttl { font-family:var(--fh); font-size:clamp(13px,1.7vw,20px); color:var(--gold-l); margin-top:14px; line-height:1.25; }
-.s4dsc { font-size:clamp(10px,1.1vw,13px); color:var(--ww); margin-top:14px; line-height:1.65; font-weight:300; }
-.s4arr { color:var(--gold); font-size:26px; margin:0 10px; flex-shrink:0; }
-
-/* ══════════════════════════════════════
-   SLIDE 5 — KORIUM PRODUIT
-══════════════════════════════════════ */
-#s5-hero {
-  position:absolute; left:0; top:0; width:58%; height:100%;
-  background:var(--green); overflow:hidden;
-}
-#s5-hblob {
-  position:absolute; top:-22%; left:-18%;
-  width:135%; height:105%;
-  background: radial-gradient(ellipse 50% 65% at 42% 52%, var(--green-m) 0%, var(--green) 52%, transparent 78%);
-  border-radius:52% 48% 44% 56% / 50% 58% 42% 50%;
-}
-.s5g { position:absolute; border-radius:50%; background:rgba(53,106,82,.4); }
-#s5-korium {
-  position:absolute; left:4.5%; top:20%;
-  font-family:var(--fh); font-size:clamp(52px,9vw,102px);
-  font-weight:700; color:var(--gold-l); line-height:1; letter-spacing:.02em;
-  z-index:2;
-}
-#s5-ksub {
-  position:absolute; left:5%; top:58%;
-  font-family:var(--fh); font-size:clamp(13px,1.7vw,19px);
-  color:var(--cream); font-style:italic; z-index:2;
-}
-#s5-kdiv { position:absolute; left:5%; top:68%; width:44%; height:1px;
-  background:linear-gradient(to right,var(--gold),transparent); z-index:2; }
-#s5-ktag { position:absolute; left:5%; top:72%; font-size:12px; color:var(--grey); font-style:italic; z-index:2; }
-#s5-callouts {
-  position:absolute; right:2.5%; top:8%; width:38%;
-  display:flex; flex-direction:column; gap:13px;
-}
-.s5c {
-  background:var(--bg2); border:1px solid var(--gold-d);
-  border-left:3px solid var(--gold); padding:16px 18px;
-}
-.s5ct { font-size:10px; letter-spacing:.13em; color:var(--gold-l); font-weight:600; text-transform:uppercase; }
-.s5cd { font-size:12px; color:var(--ww); margin-top:7px; line-height:1.55; font-weight:300; }
-
-/* ══════════════════════════════════════
-   SLIDE 6 — USAGE
-══════════════════════════════════════ */
-#s6-grid {
-  position:absolute; top:20%; left:5%; right:5%; bottom:7%;
-  display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px;
-}
-.s6card {
-  background:var(--bg2); border:1px solid var(--grey-d);
-  border-top:3px solid var(--gold);
-  display:flex; flex-direction:column; align-items:center;
-  justify-content:center; padding:28px 20px; text-align:center;
-}
-.s6n { font-family:var(--fh); font-size:clamp(34px,5vw,62px); color:var(--gold-l); font-weight:700; line-height:1; }
-.s6u { font-size:12px; color:var(--grey); margin-top:7px; letter-spacing:.06em; font-weight:300; }
-.s6dv { width:36px; height:1px; background:var(--gold-d); margin:18px auto; }
-.s6d { font-size:13px; color:var(--ww); line-height:1.6; font-weight:300; }
-
-/* ══════════════════════════════════════
-   SLIDE 7 — MATRICE
-══════════════════════════════════════ */
-#s7-svg { position:absolute; top:0; left:0; width:100%; height:100%; }
-
-/* ══════════════════════════════════════
-   SLIDE 8 — BENCHMARK
-══════════════════════════════════════ */
-#s8-grid {
-  position:absolute; top:19%; left:5%; right:5%; height:52%;
-  display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:12px;
-}
-.s8col { display:flex; flex-direction:column; overflow:hidden; }
-.s8hdr {
-  padding:11px 14px; font-size:10px; letter-spacing:.13em;
-  font-weight:600; text-transform:uppercase; color:var(--cream); text-align:center;
-}
-.s8body {
-  background:var(--bg2); flex:1; padding:14px;
-  border:1px solid var(--grey-d); border-top:none;
-}
-.s8brand {
-  font-size:12px; color:var(--ww); margin-bottom:11px;
-  padding-left:12px; font-weight:300; position:relative;
-}
-.s8brand::before { content:'·'; position:absolute; left:0; color:var(--gold-d); }
-#s8-final {
-  position:absolute; bottom:5.5%; left:5%; right:5%;
-  background:rgba(18,13,4,.95); border:1px solid var(--gold-d);
-  padding:16px 28px; text-align:center;
-}
-#s8-final p { font-family:var(--fh); font-size:clamp(12px,1.55vw,17px); color:var(--gold-l); }
-
-/* ══════════════════════════════════════
-   SLIDE 9 — VIABILITÉ
-══════════════════════════════════════ */
-#s9-cards {
-  position:absolute; top:20%; left:5%; right:5%; bottom:7%;
-  display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px;
-}
-.s9card {
-  border:1px solid var(--gold-d); border-left:4px solid var(--gold);
-  padding:26px 22px; display:flex; flex-direction:column;
-}
-.s9lbl { font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--cream); font-weight:600; }
-.s9num { font-family:var(--fh); font-size:clamp(22px,3.2vw,38px); color:var(--gold-l); font-weight:700; margin-top:12px; line-height:1.1; }
-.s9sub { font-size:13px; color:var(--ww); margin-top:9px; line-height:1.5; font-weight:300; }
-.s9dv  { width:32px; height:1px; background:var(--gold-d); margin:14px 0; }
-.s9nt  { font-size:12px; color:var(--grey); font-style:italic; line-height:1.5; }
-
-/* ══════════════════════════════════════
-   SLIDE 10 — FOODSHAKER
-══════════════════════════════════════ */
-#s10-pillars {
-  position:absolute; top:22%; left:5%; right:5%; bottom:7%;
-  display:grid; grid-template-columns:1fr 1fr 1fr; gap:18px;
-}
-.s10p {
-  border:1px solid var(--gold-d); border-top:3px solid var(--gold);
-  display:flex; flex-direction:column; align-items:center;
-  padding:0 22px 26px;
-}
-.s10p:nth-child(1){background:var(--green);}
-.s10p:nth-child(2){background:var(--green-m);}
-.s10p:nth-child(3){background:rgba(28,50,38,.9);}
-.s10ico {
-  width:60px; height:60px; border-radius:50%; background:var(--gold);
-  display:flex; align-items:center; justify-content:center;
-  font-family:var(--fh); font-size:20px; font-weight:700; color:var(--bg);
-  margin-top:26px;
-}
-.s10dv { width:36px; height:1px; background:var(--gold-d); margin:18px 0 14px; }
-.s10ttl { font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--gold-l); font-weight:600; text-align:center; }
-.s10dsc { font-size:13px; color:var(--ww); margin-top:12px; line-height:1.65; font-weight:300; text-align:center; }
-
-/* ══════════════════════════════════════
-   SLIDE 11 — CLÔTURE
-══════════════════════════════════════ */
-#s11-b1 {
-  position:absolute; left:-22%; top:-22%;
-  width:82%; height:145%;
-  background: radial-gradient(ellipse at 50% 50%, var(--green-m) 0%, var(--green) 48%, transparent 72%);
-  border-radius:54% 46% 58% 42% / 46% 54% 46% 54%;
-}
-#s11-b2 {
-  position:absolute; right:-12%; bottom:-18%;
-  width:56%; height:82%;
-  background: radial-gradient(ellipse at center, var(--green) 0%, transparent 68%);
-  border-radius:60% 40% 50% 50% / 40% 60% 50% 60%;
-  opacity:.45;
-}
-#s11-ov { position:absolute; inset:0; background:rgba(6,7,11,.82); }
-#s11-tl { position:absolute; left:7%; top:8%; width:38%; height:1px;
-  background:linear-gradient(to right,var(--gold),transparent); }
-#s11-txt {
-  position:absolute; left:8%; top:13%; right:8%;
-  font-family:var(--fh); font-size:clamp(13px,1.65vw,19px);
-  line-height:1.85; color:var(--ww);
-}
-#s11-txt .hl { color:var(--gold-l); font-weight:700; }
-#s11-txt .pb { margin-bottom:18px; }
-#s11-ft { position:absolute; left:8%; bottom:7%; }
-#s11-fl { width:140px; height:1px; background:linear-gradient(to right,var(--gold),transparent); margin-bottom:9px; }
-#s11-fn { font-size:10px; color:var(--grey); font-style:italic; letter-spacing:.06em; }
+  body { margin: 0; background: var(--ivory); }
 </style>
-</head>
-<body>
-<div id="deck" onclick="nextStep()">
 
-<!-- ═══════════════════ SLIDE 1 — COUVERTURE ═══════════════════ -->
-<div id="slide-1" class="slide active">
-  <div id="s1-blob1" class="anim slow"></div>
-  <div id="s1-blob2" class="anim slow"></div>
-  <div id="s1-warm"  class="anim slow"></div>
-  <div id="s1-vl"    class="anim"></div>
-  <div id="s1-title" class="anim fx">QUINTALYS</div>
-  <div id="s1-div"   class="anim fast"></div>
-  <div id="s1-sub"   class="anim">
-    Réhabiliter la cuisine<br>
-    <em>comme terrain de formulation culinaire</em>
-  </div>
-  <div id="s1-name"  class="anim">Noelly Sterlin&nbsp;·&nbsp;ISARA Foodshaker 2026</div>
-  <div id="s1-logo"  class="anim fx">Q</div>
-</div>
-
-<!-- ═══════════════════ SLIDE 2 — CONSTATS + PARADOXE ═══════════════════ -->
-<div id="slide-2" class="slide">
-  <div id="s2-left"  class="anim fast"></div>
-  <div id="s2-right" class="anim fast"></div>
-  <div id="s2-cdiv"  class="anim"></div>
-  <!-- pills gauche -->
-  <div id="p1" class="s2p anim"></div>
-  <div id="p2" class="s2p anim"></div>
-  <div id="p3" class="s2p anim"></div>
-  <div id="p4" class="s2p anim"></div>
-  <div id="p5" class="s2p anim"></div>
-  <div id="s2-llbl" class="anim">COMPLÉMENT<br>ALIMENTAIRE<br><span style="color:var(--grey);font-size:10px;font-weight:300">gélules · poudres · routine</span></div>
-  <!-- feuilles droite -->
-  <div id="l1" class="s2l anim"></div>
-  <div id="l2" class="s2l anim"></div>
-  <div id="l3" class="s2l anim"></div>
-  <div id="l4" class="s2l anim"></div>
-  <div id="s2-rlbl" class="anim">CUISINE<br>FONCTIONNELLE<br><span style="color:var(--grey);font-size:10px;font-weight:300">repas · cuisson · végétal</span></div>
-  <!-- question centrale -->
-  <div id="s2-qbox" class="anim slow">
-    <p>Et si la fonctionnalité était progressivement sortie du repas&nbsp;?</p>
-  </div>
-</div>
-
-<!-- ═══════════════════ SLIDE 3 — CUISINE = FORMULATION ═══════════════════ -->
-<div id="slide-3" class="slide">
-  <!-- Title (HTML layer) -->
-  <div id="s3-title" class="stitle anim">La cuisine n'est pas neutre</div>
-  <div id="s3-sdiv"  class="sdiv anim fast"></div>
-  <svg id="s3-svg" viewBox="0 0 1000 660" preserveAspectRatio="xMidYMid meet">
-    <!-- hub circle -->
-    <g id="s3-hub" class="anim">
-      <circle cx="500" cy="420" r="68" fill="#204030" stroke="#C9A96E" stroke-width="1.4"/>
-      <text x="500" y="412" text-anchor="middle" fill="#E8D5A3" font-family="'Playfair Display',Georgia,serif" font-size="13" font-weight="700">MATRICE</text>
-      <text x="500" y="432" text-anchor="middle" fill="#E8D5A3" font-family="'Playfair Display',Georgia,serif" font-size="13" font-weight="700">ALIMENTAIRE</text>
-    </g>
-    <!-- satellite 1: Chaleur -->
-    <g id="s3-s1" class="anim">
-      <line x1="500" y1="420" x2="162" y2="246" stroke="#7A623A" stroke-width="1" class="drawline"/>
-      <ellipse cx="135" cy="228" rx="72" ry="34" fill="#142619" stroke="#C9A96E" stroke-width="1"/>
-      <text x="135" y="234" text-anchor="middle" fill="#F5F0E8" font-family="'Inter',Calibri,sans-serif" font-size="14" font-weight="300">Chaleur</text>
-    </g>
-    <!-- satellite 2: Eau -->
-    <g id="s3-s2" class="anim">
-      <line x1="500" y1="420" x2="378" y2="148" stroke="#7A623A" stroke-width="1" class="drawline"/>
-      <ellipse cx="352" cy="130" rx="72" ry="34" fill="#142619" stroke="#C9A96E" stroke-width="1"/>
-      <text x="352" y="136" text-anchor="middle" fill="#F5F0E8" font-family="'Inter',Calibri,sans-serif" font-size="14" font-weight="300">Eau</text>
-    </g>
-    <!-- satellite 3: Broyage -->
-    <g id="s3-s3" class="anim">
-      <line x1="500" y1="420" x2="660" y2="148" stroke="#7A623A" stroke-width="1" class="drawline"/>
-      <ellipse cx="688" cy="130" rx="72" ry="34" fill="#142619" stroke="#C9A96E" stroke-width="1"/>
-      <text x="688" y="136" text-anchor="middle" fill="#F5F0E8" font-family="'Inter',Calibri,sans-serif" font-size="14" font-weight="300">Broyage</text>
-    </g>
-    <!-- satellite 4: Associations -->
-    <g id="s3-s4" class="anim">
-      <line x1="500" y1="420" x2="832" y2="302" stroke="#7A623A" stroke-width="1" class="drawline"/>
-      <ellipse cx="870" cy="290" rx="88" ry="34" fill="#142619" stroke="#C9A96E" stroke-width="1"/>
-      <text x="870" y="296" text-anchor="middle" fill="#F5F0E8" font-family="'Inter',Calibri,sans-serif" font-size="14" font-weight="300">Associations</text>
-    </g>
-    <!-- satellite 5: Cuisson -->
-    <g id="s3-s5" class="anim">
-      <line x1="500" y1="420" x2="245" y2="532" stroke="#7A623A" stroke-width="1" class="drawline"/>
-      <ellipse cx="198" cy="548" rx="72" ry="34" fill="#142619" stroke="#C9A96E" stroke-width="1"/>
-      <text x="198" y="554" text-anchor="middle" fill="#F5F0E8" font-family="'Inter',Calibri,sans-serif" font-size="14" font-weight="300">Cuisson</text>
-    </g>
-    <!-- subtitle -->
-    <g id="s3-sub" class="anim">
-      <text x="500" y="628" text-anchor="middle" fill="#828282" font-family="'Inter',Calibri,sans-serif" font-size="12" font-style="italic">
-        Chaque paramètre de préparation module la disponibilité fonctionnelle des composés.
-      </text>
-    </g>
-  </svg>
-</div>
-
-<!-- ═══════════════════ SLIDE 4 — INFUSION-CUISSON ═══════════════════ -->
-<div id="slide-4" class="slide">
-  <div id="s4-title" class="stitle anim">Infuser&nbsp;&nbsp;·&nbsp;&nbsp;Cuire&nbsp;&nbsp;·&nbsp;&nbsp;Agrémenter</div>
-  <div id="s4-sdiv"  class="sdiv anim fast"></div>
-  <div id="s4-steps">
-    <div id="s4-step1" class="s4step anim">
-      <div class="s4num">01</div>
-      <div class="s4ttl">KORIUM + Eau</div>
-      <div class="s4dsc">Versez dans l'eau<br>de cuisson froide</div>
-    </div>
-    <div id="s4-arr1" class="s4arr anim">›</div>
-    <div id="s4-step2" class="s4step anim">
-      <div class="s4num">02</div>
-      <div class="s4ttl">Infusion-Cuisson</div>
-      <div class="s4dsc">Chaleur progressive<br>→ diffusion des composés</div>
-    </div>
-    <div id="s4-arr2" class="s4arr anim">›</div>
-    <div id="s4-step3" class="s4step anim">
-      <div class="s4num">03</div>
-      <div class="s4ttl">Matrice Imprégnée</div>
-      <div class="s4dsc">Céréales · légumineuses<br>· légumes enrichis</div>
-    </div>
-  </div>
-</div>
-
-<!-- ═══════════════════ SLIDE 5 — KORIUM PRODUIT ═══════════════════ -->
-<div id="slide-5" class="slide">
-  <div id="s5-hero">
-    <div id="s5-hblob"></div>
-    <!-- granules pattern -->
-    <div class="s5g" style="width:14px;height:14px;bottom:22%;left:12%"></div>
-    <div class="s5g" style="width:10px;height:10px;bottom:18%;left:22%"></div>
-    <div class="s5g" style="width:16px;height:16px;bottom:26%;left:34%"></div>
-    <div class="s5g" style="width:11px;height:11px;bottom:15%;left:45%"></div>
-    <div class="s5g" style="width:13px;height:13px;bottom:20%;left:8%"></div>
-    <div class="s5g" style="width:9px;height:9px;bottom:12%;left:30%"></div>
-    <div class="s5g" style="width:15px;height:15px;bottom:30%;left:52%"></div>
-  </div>
-  <div id="s5-korium" class="anim fx">KORIUM</div>
-  <div id="s5-ksub"   class="anim">Le condiment de formulation culinaire</div>
-  <div id="s5-kdiv"   class="anim fast"></div>
-  <div id="s5-ktag"   class="anim">by QUINTALYS</div>
-  <div id="s5-callouts">
-    <div id="s5-c1" class="s5c anim">
-      <div class="s5ct">Infusion-Cuisson</div>
-      <div class="s5cd">Actif pendant la préparation,<br>non après.</div>
-    </div>
-    <div id="s5-c2" class="s5c anim">
-      <div class="s5ct">Matrice Végétale</div>
-      <div class="s5cd">Céréales · légumineuses<br>· végétaux de cuisson</div>
-    </div>
-    <div id="s5-c3" class="s5c anim">
-      <div class="s5ct">Condiment</div>
-      <div class="s5cd">Geste simple intégré<br>au quotidien culinaire</div>
-    </div>
-  </div>
-</div>
-
-<!-- ═══════════════════ SLIDE 6 — USAGE ═══════════════════ -->
-<div id="slide-6" class="slide">
-  <div id="s6-title" class="stitle anim">Un usage accessible, un geste intégré</div>
-  <div id="s6-sdiv"  class="sdiv anim fast"></div>
-  <div id="s6-grid">
-    <div id="s6-c1" class="s6card anim">
-      <div class="s6n">200 g</div>
-      <div class="s6u">par format</div>
-      <div class="s6dv"></div>
-      <div class="s6d">Conditionnement standard<br>pour 1 à 2 semaines d'usage</div>
-    </div>
-    <div id="s6-c2" class="s6card anim">
-      <div class="s6n">12–16</div>
-      <div class="s6u">plats / format</div>
-      <div class="s6dv"></div>
-      <div class="s6d">Rendement optimal<br>par cuisson courante</div>
-    </div>
-    <div id="s6-c3" class="s6card anim">
-      <div class="s6n">1,5–2 €</div>
-      <div class="s6u">par plat</div>
-      <div class="s6dv"></div>
-      <div class="s6d">Accessible au quotidien,<br>comparable au condiment</div>
-    </div>
-  </div>
-</div>
-
-<!-- ═══════════════════ SLIDE 7 — MATRICE CONCURRENTIELLE ═══════════════════ -->
-<div id="slide-7" class="slide">
-  <div id="s7-title" class="stitle anim">Un territoire existant, mais fragmenté</div>
-  <svg id="s7-svg" viewBox="0 0 1000 700" preserveAspectRatio="xMidYMid meet">
-    <!-- quadrant backgrounds -->
-    <g id="s7-quads" class="anim fast">
-      <rect x="100" y="90"  width="400" height="330" fill="rgba(20,32,24,.55)"/>
-      <rect x="500" y="90"  width="400" height="330" fill="rgba(24,38,30,.70)"/>
-      <rect x="100" y="420" width="400" height="220" fill="rgba(18,18,28,.55)"/>
-      <rect x="500" y="420" width="400" height="220" fill="rgba(18,20,28,.55)"/>
-    </g>
-    <!-- axes -->
-    <g id="s7-axes" class="anim">
-      <line x1="100" y1="420" x2="900" y2="420" stroke="#282838" stroke-width="1.2" class="drawline"/>
-      <line x1="500" y1="90"  x2="500" y2="640" stroke="#282838" stroke-width="1.2" class="drawline"/>
-      <!-- arrows -->
-      <polygon points="900,416 912,420 900,424" fill="#282838"/>
-      <polygon points="496,90  500,78  504,90"  fill="#282838"/>
-      <!-- axis labels -->
-      <text x="108" y="414" fill="#828282" font-family="'Inter',Calibri,sans-serif" font-size="12">Cuisson</text>
-      <text x="840" y="414" fill="#828282" font-family="'Inter',Calibri,sans-serif" font-size="12">Post-préparation</text>
-      <text x="510" y="108" fill="#828282" font-family="'Inter',Calibri,sans-serif" font-size="12">Formulation contextualisée</text>
-      <text x="510" y="638" fill="#828282" font-family="'Inter',Calibri,sans-serif" font-size="12">Agrémentation</text>
-    </g>
-    <!-- competitors -->
-    <g id="s7-comp" class="anim">
-      <circle cx="240" cy="500" r="9" fill="#282838" stroke="#828282" stroke-width=".8"/>
-      <text x="254" y="498" fill="#828282" font-family="'Inter',Calibri,sans-serif" font-size="11">Maggi</text>
-      <circle cx="310" cy="560" r="9" fill="#282838" stroke="#828282" stroke-width=".8"/>
-      <text x="324" y="558" fill="#828282" font-family="'Inter',Calibri,sans-serif" font-size="11">Épices BIO</text>
-      <circle cx="620" cy="510" r="9" fill="#282838" stroke="#828282" stroke-width=".8"/>
-      <text x="634" y="508" fill="#828282" font-family="'Inter',Calibri,sans-serif" font-size="11">Actifry</text>
-      <circle cx="670" cy="470" r="9" fill="#282838" stroke="#828282" stroke-width=".8"/>
-      <text x="684" y="468" fill="#828282" font-family="'Inter',Calibri,sans-serif" font-size="11">Yooji</text>
-      <circle cx="280" cy="300" r="9" fill="#282838" stroke="#828282" stroke-width=".8"/>
-      <text x="294" y="298" fill="#828282" font-family="'Inter',Calibri,sans-serif" font-size="11">Overstims</text>
-    </g>
-    <!-- KORIUM dominant dot -->
-    <g id="s7-korium" class="anim fx">
-      <circle cx="800" cy="195" r="28" fill="#C9A96E" stroke="#E8D5A3" stroke-width="1.5"/>
-      <text x="838" y="189" fill="#E8D5A3" font-family="'Playfair Display',Georgia,serif" font-size="15" font-weight="700">KORIUM</text>
-      <text x="838" y="207" fill="#828282" font-family="'Inter',Calibri,sans-serif" font-size="11">by QUINTALYS</text>
-    </g>
-  </svg>
-</div>
-
-<!-- ═══════════════════ SLIDE 8 — BENCHMARK ═══════════════════ -->
-<div id="slide-8" class="slide">
-  <div id="s8-title" class="stitle anim">Des briques séparées — aucune convergence</div>
-  <div id="s8-sdiv"  class="sdiv anim fast"></div>
-  <div id="s8-grid">
-    <div id="s8-c1" class="s8col anim">
-      <div class="s8hdr" style="background:#48589E">SAUPOUDRAGE</div>
-      <div class="s8body">
-        <div class="s8brand">Épices Ducros</div>
-        <div class="s8brand">Fleur de sel</div>
-        <div class="s8brand">Mélanges aromatiques</div>
-      </div>
-    </div>
-    <div id="s8-c2" class="s8col anim">
-      <div class="s8hdr" style="background:#204030">PRÊT-À-CUIRE</div>
-      <div class="s8body">
-        <div class="s8brand">Yooji</div>
-        <div class="s8brand">Bonduelle Vapeur</div>
-        <div class="s8brand">Kit légumes</div>
-      </div>
-    </div>
-    <div id="s8-c3" class="s8col anim">
-      <div class="s8hdr" style="background:#3A2812">AROMATIQUE</div>
-      <div class="s8body">
-        <div class="s8brand">Herbes fraîches</div>
-        <div class="s8brand">Bouillons Maggi</div>
-        <div class="s8brand">Concentrés</div>
-      </div>
-    </div>
-    <div id="s8-c4" class="s8col anim">
-      <div class="s8hdr" style="background:#28203C">FOOD-SCIENCE</div>
-      <div class="s8body">
-        <div class="s8brand">Nutraceutique</div>
-        <div class="s8brand">Overstims</div>
-        <div class="s8brand">Protéines fonct.</div>
-      </div>
-    </div>
-  </div>
-  <div id="s8-final" class="anim slow">
-    <p>KORIUM est la première solution qui intègre ces dimensions dans un geste culinaire unique.</p>
-  </div>
-</div>
-
-<!-- ═══════════════════ SLIDE 9 — VIABILITÉ ═══════════════════ -->
-<div id="slide-9" class="slide">
-  <div id="s9-title" class="stitle anim">Un marché existant, une cible identifiée</div>
-  <div id="s9-sdiv"  class="sdiv anim fast"></div>
-  <div id="s9-cards">
-    <div id="s9-c1" class="s9card anim" style="background:var(--green)">
-      <div class="s9lbl">MARCHÉ</div>
-      <div class="s9num">3,2 Md€</div>
-      <div class="s9sub">Condiments &amp; épices France</div>
-      <div class="s9dv"></div>
-      <div class="s9nt">+4,7 % / an depuis 2019</div>
-    </div>
-    <div id="s9-c2" class="s9card anim" style="background:var(--green-m)">
-      <div class="s9lbl">CIBLE</div>
-      <div class="s9num">Cuisiniers actifs</div>
-      <div class="s9sub">28–55 ans, urbains<br>sensibles à la nutrition</div>
-      <div class="s9dv"></div>
-      <div class="s9nt">~12 M de ménages concernés</div>
-    </div>
-    <div id="s9-c3" class="s9card anim" style="background:rgba(32,58,44,.9)">
-      <div class="s9lbl">USAGE</div>
-      <div class="s9num">1,5–2 €/plat</div>
-      <div class="s9sub">Budget condiment habituel</div>
-      <div class="s9dv"></div>
-      <div class="s9nt">Intégration sans rupture<br>de comportement</div>
-    </div>
-  </div>
-</div>
-
-<!-- ═══════════════════ SLIDE 10 — FOODSHAKER ═══════════════════ -->
-<div id="slide-10" class="slide">
-  <div id="s10-title" class="stitle anim">Foodshaker&nbsp;: l'accélérateur logique</div>
-  <div id="s10-sdiv"  class="sdiv anim fast"></div>
-  <div id="s10-sub"   class="anim"
-    style="position:absolute;top:18.5%;width:100%;text-align:center;
-           font-size:13px;color:var(--grey);letter-spacing:.06em;">
-    QUINTALYS × ISARA — 3 piliers de convergence
-  </div>
-  <div id="s10-pillars">
-    <div id="s10-p1" class="s10p anim">
-      <div class="s10ico">01</div>
-      <div class="s10dv"></div>
-      <div class="s10ttl">Formulation</div>
-      <div class="s10dsc">Accès au plateau technique et aux compétences analytiques pour documenter KORIUM</div>
-    </div>
-    <div id="s10-p2" class="s10p anim">
-      <div class="s10ico">02</div>
-      <div class="s10dv"></div>
-      <div class="s10ttl">Food Business</div>
-      <div class="s10dsc">Réseau industriels, distributeurs et expertise go-to-market spécifique food-tech</div>
-    </div>
-    <div id="s10-p3" class="s10p anim">
-      <div class="s10ico">03</div>
-      <div class="s10dv"></div>
-      <div class="s10ttl">Structuration</div>
-      <div class="s10dsc">Accompagnement juridique, production et IP pour passer de la formulation au produit</div>
-    </div>
-  </div>
-</div>
-
-<!-- ═══════════════════ SLIDE 11 — CLÔTURE ═══════════════════ -->
-<div id="slide-11" class="slide">
-  <div id="s11-b1" class="anim slow"></div>
-  <div id="s11-b2" class="anim slow"></div>
-  <div id="s11-ov" class="anim fast"></div>
-  <div id="s11-tl" class="anim"></div>
-  <div id="s11-txt" class="anim slow">
-    <p class="pb">Aujourd'hui, beaucoup de solutions fonctionnelles existent en dehors du repas.</p>
-    <p class="pb">Avec QUINTALYS et KORIUM, mon ambition n'est pas de médicaliser l'assiette, mais de réhabiliter la cuisine comme terrain de formulation culinaire, à travers un geste simple, documenté et intégré au quotidien.</p>
-    <p class="pb"><span class="hl">KORIUM constitue cette première preuve produit.</span></p>
-    <p>Et Foodshaker représente pour moi l'environnement capable d'aider cette approche à devenir une réalité alimentaire concrète.</p>
-  </div>
-  <div id="s11-ft" class="anim slow">
-    <div id="s11-fl"></div>
-    <div id="s11-fn">QUINTALYS&nbsp;&nbsp;·&nbsp;&nbsp;by QUINTEXOR</div>
-  </div>
-</div>
-
-</div><!-- /#deck -->
-
-<!-- Navigation -->
-<div id="nav">
-  <button class="nbtn" id="pb" onclick="event.stopPropagation();prevStep()">‹</button>
-  <span id="counter">1 / 11</span>
-  <button class="nbtn" id="nb" onclick="event.stopPropagation();nextStep()">›</button>
-</div>
-<div id="bar"></div>
-<div id="hint">Cliquer ou → pour avancer&nbsp;&nbsp;·&nbsp;&nbsp;F pour plein écran</div>
-
-<script>
-const TOTAL = 11;
-
-const STEPS = {
-  1: [['s1-blob1','s1-blob2','s1-warm'],['s1-vl'],['s1-title'],['s1-div','s1-sub'],['s1-name'],['s1-logo']],
-  2: [['s2-left','s2-right'],['p1','p2','p3','p4','p5','s2-llbl'],['l1','l2','l3','l4','s2-rlbl'],['s2-cdiv'],['s2-qbox']],
-  3: [['s3-title','s3-sdiv'],['s3-hub'],['s3-s1'],['s3-s2'],['s3-s3'],['s3-s4'],['s3-s5'],['s3-sub']],
-  4: [['s4-title','s4-sdiv'],['s4-step1'],['s4-arr1','s4-step2'],['s4-arr2','s4-step3']],
-  5: [['s5-hero','s5-hblob'],['s5-korium'],['s5-ksub','s5-kdiv','s5-ktag'],['s5-c1'],['s5-c2'],['s5-c3']],
-  6: [['s6-title','s6-sdiv'],['s6-c1'],['s6-c2'],['s6-c3']],
-  7: [['s7-title'],['s7-quads','s7-axes'],['s7-comp'],['s7-korium']],
-  8: [['s8-title','s8-sdiv'],['s8-c1'],['s8-c2'],['s8-c3'],['s8-c4'],['s8-final']],
-  9: [['s9-title','s9-sdiv'],['s9-c1'],['s9-c2'],['s9-c3']],
-  10:[['s10-title','s10-sdiv','s10-sub'],['s10-p1'],['s10-p2'],['s10-p3']],
-  11:[['s11-b1','s11-b2','s11-ov'],['s11-tl'],['s11-txt'],['s11-ft']],
-};
-
-let cur = 1, step = 0;
-
-function reveal(id) {
-  const el = document.getElementById(id);
-  if (el) {
-    // Stagger siblings slightly
-    el.classList.add('revealed');
-  }
-}
-
-function nextStep() {
-  const steps = STEPS[cur] || [];
-  if (step < steps.length) {
-    steps[step].forEach((id, i) => {
-      setTimeout(() => reveal(id), i * 80);
-    });
-    step++;
-  } else if (cur < TOTAL) {
-    goTo(cur + 1);
-  }
-  hideHint();
-}
-
-function prevStep() {
-  if (step > 0) {
-    step--;
-    const ids = (STEPS[cur] || [])[step] || [];
-    ids.forEach(id => {
-      const el = document.getElementById(id);
-      if (el) el.classList.remove('revealed');
-    });
-  } else if (cur > 1) {
-    goTo(cur - 1, true);
-  }
-}
-
-function goTo(n, revealAll = false) {
-  document.getElementById(`slide-${cur}`).classList.remove('active');
-  cur = n; step = 0;
-  const sl = document.getElementById(`slide-${n}`);
-  sl.querySelectorAll('.anim').forEach(el => el.classList.remove('revealed'));
-  sl.classList.add('active');
-  if (revealAll) {
-    const allSteps = STEPS[n] || [];
-    allSteps.forEach(group => group.forEach(id => reveal(id)));
-    step = allSteps.length;
-  }
-  updateUI();
-}
-
-function updateUI() {
-  document.getElementById('counter').textContent = `${cur} / ${TOTAL}`;
-  document.getElementById('bar').style.width = `${(cur / TOTAL) * 100}%`;
-}
-
-let hintGone = false;
-function hideHint() {
-  if (hintGone) return;
-  hintGone = true;
-  document.getElementById('hint').style.opacity = '0';
-}
-
-document.addEventListener('keydown', e => {
-  if (e.key === 'ArrowRight' || e.key === ' ')  { e.preventDefault(); nextStep(); }
-  if (e.key === 'ArrowLeft')                    { e.preventDefault(); prevStep(); }
-  if (e.key === 'ArrowDown')                    { e.preventDefault(); if(cur<TOTAL) goTo(cur+1); }
-  if (e.key === 'ArrowUp')                      { e.preventDefault(); if(cur>1) goTo(cur-1,true); }
-  if (e.key === 'f' || e.key === 'F') {
-    if (document.fullscreenElement) document.exitFullscreen();
-    else document.documentElement.requestFullscreen().catch(()=>{});
-  }
-});
-
-updateUI();
+<script type="application/json" id="speaker-notes">
+[
+  "Bonjour. Je suis Noelly Sterlin, fondatrice de QUINTEXOR et porteuse de la marque QUINTALYS. Mon parcours est à l'interface entre les sciences du vivant et le management de l'innovation. Je suis diplômée en biologie moléculaire et cellulaire, avec une spécialisation en biologie cutanée, et j'ai progressivement orienté cette expertise vers les questions de nutrition, de formulation, et de développement de projets innovants. Aujourd'hui, je développe QUINTEXOR comme une approche de formulation culinaire fonctionnelle. QUINTALYS en constitue la première traduction alimentaire grand public, et à travers une première gamme appelée KORIUM, le projet explore une idée simple : comment réintégrer une logique fonctionnelle directement dans le repas — non pas sous forme de supplémentation, mais à travers des condiments pensés pour la cuisson et les usages réels de cuisine.",
+  "Depuis plusieurs années, on observe un intérêt croissant pour les approches nutritionnelles dites fonctionnelles. Cette recherche s'est notamment traduite par une forte progression des compléments alimentaires. Pourtant, cette dynamique révèle un paradoxe. La fonctionnalité s'est déplacée hors du repas, dans une routine parallèle de gélules et de poudres. En parallèle, la diversité alimentaire reste difficile à traduire dans la cuisine du quotidien. Le problème n'est pas seulement nutritionnel. Il est aussi culinaire.",
+  "La valeur d'un repas ne dépend pas uniquement des ingrédients qu'il contient. Dès que nous cuisinons, plusieurs paramètres entrent en jeu : la chaleur, l'eau, les associations, et la matrice de l'aliment. La littérature en food science montre que ces paramètres influencent la stabilité, la diffusion et la perception des composés. Cuisiner devient un espace de formulation culinaire.",
+  "Cette lecture trouve une traduction concrète avec KORIUM. Plutôt qu'ajouter un condiment après préparation, KORIUM accompagne certaines cuissons — notamment par absorption. La formulation est intégrée dans l'eau de cuisson, qui devient un milieu de diffusion. Dans des contextes comme le riz, les céréales, ou les légumineuses préparées sans égouttage, le condiment ne reste plus en surface : il accompagne l'imprégnation aromatique et la cohérence sensorielle du plat.",
+  "KORIUM est la première gamme développée sous QUINTALYS. Un pot de 200g commercialisé autour de 24,90€ TTC, soit douze à seize préparations — environ 1,50 à 2€ par plat. Cible : profils actifs, flexitariens, food-curieux, recherchant simplicité et facilité d'usage.",
+  "KORIUM n'est qu'une première porte. La vision de QUINTALYS est de construire une grammaire culinaire complète : chaque gamme répond à un geste de transformation. KORIUM pour l'infusion-cuisson, SOLVAE pour la cuisson liquide, VELIOR pour la diffusion sèche, AURIAE pour les sauces, NERUM pour la fermentation. Foodshaker, puis le lancement D2C, puis la structuration en SASU avec i-Lab, et à terme une enseigne propre.",
+  "Pour comprendre l'environnement concurrentiel de KORIUM, deux axes : le moment d'ajout (post-préparation → cuisson intégrée) et la posture (agrémentation simple → formulation contextualisée). Le territoire est fragmenté. Personne n'occupe aujourd'hui le quadrant haut-droit — cuisson intégrée et formulation culinaire contextualisée.",
+  "Trois briques différencient KORIUM : la cuisson intégrée comme moment d'action ; une lecture matrice et procédé qui dépasse la simple liste d'ingrédients ; et une pédagogie scientifique exprimée sans allégation santé.",
+  "Au-delà du produit, KORIUM s'inscrit à l'intersection de deux dynamiques installées : l'alimentation fonctionnelle en croissance, et les condiments ancrés dans le quotidien. L'objectif n'est pas d'ajouter une routine, mais de rendre plus simple un geste qui existe déjà : cuisiner.",
+  "Aujourd'hui, la logique scientifique et stratégique est structurée. Trois chantiers prioritaires pour Foodshaker : formulation, food business, structuration. Moins un point de départ qu'un accélérateur.",
+  "Avec QUINTALYS et KORIUM, l'ambition n'est pas de médicaliser l'assiette. C'est de réhabiliter la cuisine comme un espace pensé autour des interactions culinaires du repas — un geste simple, documenté, et intégré au quotidien. Merci."
+]
 </script>
+</head>
+
+<body>
+
+<template id="__bundler_thumbnail" data-bg-color="#F5EDE0">
+  <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+    <!-- ascending dot plume -->
+    <g fill="#C8A040">
+      <circle cx="100" cy="60" r="2.6"/>
+      <circle cx="100" cy="70" r="2.4"/>
+      <circle cx="100" cy="80" r="2.2"/>
+      <circle cx="100" cy="90" r="2"/>
+    </g>
+    <!-- flame strokes -->
+    <g stroke="#C8A040" stroke-width="2" stroke-linecap="round" fill="none">
+      <line x1="108" y1="78" x2="108" y2="108"/>
+      <line x1="116" y1="86" x2="116" y2="108"/>
+    </g>
+    <!-- flame curl -->
+    <path d="M100 96 C 95 104, 95 112, 100 118 C 105 112, 105 104, 100 96 Z" fill="#C8A040"/>
+    <!-- bowl (olive leaves inside copper arc) -->
+    <path d="M65 118 Q 100 158 135 118 Q 132 140 100 148 Q 68 140 65 118 Z" fill="#3C4820"/>
+    <path d="M55 115 Q 100 168 145 115" fill="none" stroke="#C8A040" stroke-width="3.5" stroke-linecap="round"/>
+    <!-- foot -->
+    <line x1="92" y1="160" x2="108" y2="160" stroke="#C8A040" stroke-width="3" stroke-linecap="round"/>
+  </svg>
+</template>
+
+<deck-stage width="1920" height="1080">
+
+  <!-- ============================================================
+       01 · COUVERTURE
+       ============================================================ -->
+  <section class="s1v2 theme-ivory" data-screen-label="slide-01" data-label="01 Couverture">
+
+    <div class="hero">
+      <image-slot id="cover-hero"
+                  shape="rect" fit="cover"
+                  placeholder="Photo hero — ingrédients secs, épices, ambiance culinaire chaleureuse"
+                  class="reveal r-zoom slower drift"></image-slot>
+    </div>
+
+    <div class="chrome-top">
+      <span class="num reveal r-fade d-1">01 / 11</span>
+      <span class="filet reveal r-fade d-1"></span>
+      <span class="brand reveal r-fade d-1">Foodshaker · 2026</span>
+    </div>
+
+    <div class="panel">
+      <div class="top-lockup">
+        <div class="mark-row reveal r-fade d-2">
+          <div class="mark"></div>
+          <div class="wordmark">QUINTALYS</div>
+        </div>
+        <div class="tag reveal r-fade d-3">Culinobiotech · Maison Quintexor</div>
+      </div>
+
+      <h1 class="baseline reveal d-4">
+        Réhabiliter la cuisine<br>comme <em>terrain de formulation culinaire.</em>
+      </h1>
+
+      <div class="signature reveal d-6">
+        <div class="sig-rule"></div>
+        <div class="sig-name">Noelly Sterlin</div>
+        <div class="sig-role">Fondatrice · Quintexor</div>
+        <div class="triad">
+          <span>Science</span>
+          <span>Innovation</span>
+          <span>Business</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="chrome-bottom">
+      <span class="reveal r-fade d-7">Quintexor · Quintalys</span>
+      <span class="filet reveal r-fade d-7"></span>
+      <span class="right reveal r-fade d-7">Couverture</span>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       02 · PARADOXE — split ivoire / sauge
+       ============================================================ -->
+  <section class="s2v2 theme-ivory" data-screen-label="slide-02" data-label="02 Paradoxe">
+
+    <div class="half l">
+      <div class="photo reveal r-fade slow d-1">
+        <image-slot id="paradox-left" fit="cover"
+                    placeholder="Gélules, poudres, routine de supplémentation — ambiance routine"></image-slot>
+      </div>
+      <div class="tag reveal r-up d-2">Hors du repas</div>
+      <p class="label reveal r-up d-3">Une routine parallèle.</p>
+      <div class="micro reveal r-up d-4">Gélules · Poudres · Actifs isolés</div>
+    </div>
+
+    <div class="half r">
+      <div class="photo reveal r-fade slow d-1">
+        <image-slot id="paradox-right" fit="cover"
+                    placeholder="Légumineuses, céréales, matrices végétales — ingrédients bruts"></image-slot>
+      </div>
+      <div class="tag reveal r-up d-2">Dans le repas</div>
+      <p class="label reveal r-up d-3">Une diversité difficile à traduire.</p>
+      <div class="micro reveal r-up d-4">Légumineuses · Céréales · Matrices végétales</div>
+    </div>
+
+    <div class="center-q build-hold" data-build-step="1">
+      <div class="q-eye">Constat</div>
+      <div class="q">Et si le problème n'était pas seulement <em>nutritionnel</em>,<br>mais aussi <em>culinaire</em> ?</div>
+    </div>
+
+    <div class="chrome-top">
+      <span class="num">02 / 11</span>
+      <span class="filet"></span>
+      <span class="brand">Paradoxe</span>
+    </div>
+    <div class="chrome-bottom">
+      <span class="filet"></span>
+      <span class="right">Constat</span>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       03 · CUISINE = FORMULATION — schéma culinaire (sauge)
+       ============================================================ -->
+  <section class="s3v2 theme-ingredient" data-screen-label="slide-03" data-label="03 Cuisine = formulation">
+
+    <div class="chrome-top">
+      <span class="num">03 / 11</span>
+      <span class="filet"></span>
+      <span class="brand">Lecture · Food science</span>
+    </div>
+
+    <div class="body-wrap">
+      <div class="left">
+        <p class="eyebrow reveal r-fade d-1">Mécanisme</p>
+        <h2 class="title reveal d-2">La cuisson<br>n'est <em>pas neutre.</em></h2>
+        <p class="lede reveal d-3">
+          Eau, chaleur, ingrédients, matrice : ces quatre paramètres se croisent à chaque préparation. Leur combinaison conditionne la <b>diffusion</b>, l'<b>imprégnation</b> et la <b>rétention</b> des composés présents dans l'aliment.
+        </p>
+        <p class="lede reveal d-4" style="font-style: italic; font-size: calc(22px * var(--base-scale)); border-top: 1px solid var(--gold); padding-top: 18px; max-width: 460px;">
+          Cuisiner, ce n'est pas seulement assembler. C'est aussi formuler.
+        </p>
+      </div>
+
+      <div class="schema reveal r-zin slow d-3">
+        <svg viewBox="0 0 900 760" preserveAspectRatio="xMidYMid meet">
+          <!-- rings centered at 450,380 -->
+          <circle class="ring" cx="450" cy="380" r="270"/>
+          <circle class="ring dotted" cx="450" cy="380" r="190"/>
+
+          <!-- central matrice -->
+          <circle class="center-circle" cx="450" cy="380" r="120"/>
+          <text class="center-sub" x="450" y="352">Matrice</text>
+          <text class="center-name" x="450" y="405">végétale</text>
+
+          <!-- diagonal connectors to each corner label -->
+          <line class="filet" x1="365" y1="295" x2="285" y2="215"/>
+          <line class="filet" x1="535" y1="295" x2="615" y2="215"/>
+          <line class="filet" x1="365" y1="465" x2="285" y2="545"/>
+          <line class="filet" x1="535" y1="465" x2="615" y2="545"/>
+
+          <!-- Eau (haut gauche) -->
+          <g>
+            <text class="label-tag" x="40" y="140">Eau</text>
+            <text class="label-name" x="40" y="200">L'eau</text>
+            <text class="label-note" x="40" y="238">solvant, milieu d'imprégnation</text>
+          </g>
+
+          <!-- Chaleur (haut droite) -->
+          <g>
+            <text class="label-tag" x="860" y="140" text-anchor="end">Chaleur</text>
+            <text class="label-name" x="860" y="200" text-anchor="end">La chaleur</text>
+            <text class="label-note" x="860" y="238" text-anchor="end">stabilité, vapeur, diffusion</text>
+          </g>
+
+          <!-- Ingrédients (bas gauche) -->
+          <g>
+            <text class="label-tag" x="40" y="570">Ingrédients</text>
+            <text class="label-name" x="40" y="630">Aromates &amp; cofacteurs</text>
+            <text class="label-note" x="40" y="668">épices, racines, fermentés</text>
+          </g>
+
+          <!-- Procédé (bas droite) -->
+          <g>
+            <text class="label-tag" x="860" y="570" text-anchor="end">Procédé</text>
+            <text class="label-name" x="860" y="630" text-anchor="end">Le procédé</text>
+            <text class="label-note" x="860" y="668" text-anchor="end">cuisson par absorption</text>
+          </g>
+        </svg>
+      </div>
+    </div>
+
+    <div class="chrome-bottom">
+      <span class="filet"></span>
+      <span class="right">Cuisiner · Formuler</span>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       04 · INFUSION-CUISSON — 3 photo-steps
+       ============================================================ -->
+  <section class="s4v2 theme-ivory" data-screen-label="slide-04" data-label="04 Infusion-cuisson">
+
+    <div class="chrome-top">
+      <span class="num">04 / 11</span>
+      <span class="filet"></span>
+      <span class="brand">Procédé · KORIUM</span>
+    </div>
+
+    <div class="body-wrap">
+      <div class="head">
+        <p class="eyebrow reveal r-fade d-1">Geste culinaire</p>
+        <h2 class="title reveal d-2">Infuser. Cuire. <em>Agrémenter.</em></h2>
+        <p class="lede reveal d-3">
+          Plutôt qu'ajouter un condiment après préparation, KORIUM se place <b>dans l'eau de cuisson</b>. Il accompagne la matrice pendant tout le procédé.
+        </p>
+      </div>
+
+      <div class="flow">
+        <div class="step reveal r-up d-4">
+          <div class="photo">
+            <image-slot id="step-eau" shape="rect" fit="cover"
+                        placeholder="Casserole, eau frémissante, poudre KORIUM versée"></image-slot>
+          </div>
+          <div class="caption">
+            <div class="num">Étape · 01</div>
+            <div class="name">L'eau de cuisson</div>
+            <div class="note">KORIUM est ajouté dans l'eau, en amont — sans égouttage.</div>
+          </div>
+        </div>
+
+        <div class="arrow reveal r-fade d-5">→</div>
+
+        <div class="step reveal r-up d-5">
+          <div class="photo">
+            <image-slot id="step-infusion" shape="rect" fit="cover"
+                        placeholder="Vapeur, diffusion, riz qui absorbe"></image-slot>
+          </div>
+          <div class="caption">
+            <div class="num">Étape · 02</div>
+            <div class="name">Le milieu de diffusion</div>
+            <div class="note">Aromates, matrices et cofacteurs interagissent avec l'aliment pendant la cuisson.</div>
+          </div>
+        </div>
+
+        <div class="arrow reveal r-fade d-6">→</div>
+
+        <div class="step reveal r-up d-6">
+          <div class="photo">
+            <image-slot id="step-matrice" shape="rect" fit="cover"
+                        placeholder="Plat fini : riz / légumineuses agrémentés, dressage sobre"></image-slot>
+          </div>
+          <div class="caption">
+            <div class="num">Étape · 03</div>
+            <div class="name">L'imprégnation</div>
+            <div class="note">Le condiment accompagne la cohérence sensorielle, en profondeur du plat.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chrome-bottom">
+      <span class="filet"></span>
+      <span class="right">Procédé culinaire</span>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       05 · KORIUM — produit + usage (ivoire)
+       ============================================================ -->
+  <section class="s5v2 theme-ivory" data-screen-label="slide-05" data-label="05 KORIUM produit">
+
+    <div class="chrome-top">
+      <span class="num">05 / 11</span>
+      <span class="filet"></span>
+      <span class="brand">Produit · Première gamme</span>
+    </div>
+
+    <div class="body-wrap">
+      <div class="left">
+        <p class="eyebrow reveal r-fade d-1">Première gamme · QUINTALYS</p>
+        <h1 class="product-name reveal d-2">KORIUM</h1>
+        <p class="product-lede reveal d-3">
+          Formulations sèches — épices, aromates, matrices végétales, cofacteurs culinaires. Quatre à sept ingrédients par référence, pensées pour l'<b>infusion-cuisson</b>.
+        </p>
+
+        <div class="facts">
+          <div class="fact reveal r-up d-4">
+            <div class="k">Format</div>
+            <div class="v">200<span class="u"> g</span></div>
+            <div class="note">Pot premier lancement.</div>
+          </div>
+          <div class="fact reveal r-up d-5">
+            <div class="k">Prix TTC</div>
+            <div class="v">24,90<span class="u"> €</span></div>
+            <div class="note">Premium, accessible à l'usage récurrent.</div>
+          </div>
+          <div class="fact reveal r-up d-6">
+            <div class="k">€ / plat</div>
+            <div class="v">1,50<span class="u"> –</span>2</div>
+            <div class="note">Sur 12 à 16 préparations.</div>
+          </div>
+        </div>
+
+        <div class="audience reveal r-fade d-7">
+          <span class="label">Cible</span>
+          <div class="tags">
+            <span>Actifs</span><span>Flexitariens</span><span>Food-curieux</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="packshot reveal r-zoom slow d-2">
+        <image-slot id="korium-packshot" shape="rect" fit="cover"
+                    placeholder="Packshot KORIUM — pot 200g, étiquette sobre, granulométrie visible. Bois clair / lin."></image-slot>
+      </div>
+    </div>
+
+    <div class="chrome-bottom">
+      <span class="filet"></span>
+      <span class="right">Produit · KORIUM</span>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       06 · VISION — GRAMMAIRE CULINAIRE (sauge)
+       ============================================================ -->
+  <section class="s6v2 theme-ingredient" data-screen-label="slide-06" data-label="06 Vision">
+
+    <div class="chrome-top">
+      <span class="num">06 / 11</span>
+      <span class="filet"></span>
+      <span class="brand">Vision · Architecture future</span>
+    </div>
+
+    <div class="body-wrap">
+      <div class="head">
+        <p class="eyebrow reveal r-fade d-1">Vision</p>
+        <h2 class="title reveal d-2">Une <em>grammaire culinaire.</em></h2>
+        <p class="lede reveal d-3">
+          Chaque gamme répond à un moment de transformation culinaire — KORIUM n'en est que la première porte.
+        </p>
+      </div>
+
+      <div class="gammes">
+        <div class="gamme is-active reveal r-up d-4">
+          <span class="badge">Lancement</span>
+          <div class="name">KORIUM</div>
+          <div class="phrase">L'eau<br>transforme</div>
+          <div class="descr">Infusion-cuisson</div>
+        </div>
+        <div class="gamme reveal r-up d-5">
+          <div class="name">SOLVAE</div>
+          <div class="phrase">Le liquide<br>extrait</div>
+          <div class="descr">Cuisson liquide</div>
+        </div>
+        <div class="gamme reveal r-up d-6">
+          <div class="name">VELIOR</div>
+          <div class="phrase">La poudre<br>révèle</div>
+          <div class="descr">Diffusion sèche</div>
+        </div>
+        <div class="gamme reveal r-up d-7">
+          <div class="name">AURIAE</div>
+          <div class="phrase">L'émulsion<br>diffuse</div>
+          <div class="descr">Sauces</div>
+        </div>
+        <div class="gamme reveal r-up d-8">
+          <div class="name">NERUM</div>
+          <div class="phrase">Le vivant<br>mature</div>
+          <div class="descr">Fermentation</div>
+        </div>
+      </div>
+
+      <div class="roadmap reveal r-fade d-9">
+        <div class="steps">
+          <div class="step-r">
+            <div class="dot"></div>
+            <div class="lbl">Foodshaker</div>
+            <div class="when">S2 2026</div>
+          </div>
+          <div class="step-r future">
+            <div class="dot"></div>
+            <div class="lbl">Lancement D2C</div>
+            <div class="when">S1 2027</div>
+          </div>
+          <div class="step-r future">
+            <div class="dot"></div>
+            <div class="lbl">SASU + i-Lab</div>
+            <div class="when">T2 2027</div>
+          </div>
+          <div class="step-r future">
+            <div class="dot"></div>
+            <div class="lbl">Enseigne</div>
+            <div class="when">2028 +</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chrome-bottom">
+      <span class="filet"></span>
+      <span class="right">Vision · Grammaire culinaire</span>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       07 · CARTOGRAPHIE — vraie matrice X/Y
+       ============================================================ -->
+  <section class="s7v2 theme-ivory" data-screen-label="slide-07" data-label="07 Cartographie">
+
+    <div class="chrome-top">
+      <span class="num">07 / 11</span>
+      <span class="filet"></span>
+      <span class="brand">Cartographie concurrentielle</span>
+    </div>
+
+    <div class="body-wrap">
+      <div class="left">
+        <p class="eyebrow reveal r-fade d-1">Cartographie</p>
+        <h2 class="title reveal d-2">Qu'ajoute-t-on<br>déjà au repas ?</h2>
+        <p class="lede reveal d-3">
+          Deux questions structurent le marché :<br>
+          <b>quand</b> le produit intervient, <b>comment</b> il est pensé.<br>
+          Croisées, elles dessinent quatre archétypes — et un territoire peu occupé.
+        </p>
+        <p class="takeaway reveal d-8">
+          Aucun acteur ne combine aujourd'hui<br>
+          <b>cuisson intégrée</b> et <b>formulation contextualisée</b>.
+        </p>
+      </div>
+
+      <div class="matrix">
+        <svg viewBox="0 0 1100 880" preserveAspectRatio="xMidYMid meet">
+
+          <!-- Quadrant subtle backgrounds -->
+          <rect class="quad-bg" x="100" y="40" width="450" height="380"/>
+          <rect class="quad-korium" x="550" y="40" width="460" height="380"/>
+          <rect class="quad-bg" x="100" y="420" width="450" height="340"/>
+          <rect class="quad-bg" x="550" y="420" width="460" height="340"/>
+
+          <!-- mid-line ticks -->
+          <line class="axis-tick" x1="550" y1="40" x2="550" y2="760"/>
+          <line class="axis-tick" x1="100" y1="420" x2="1010" y2="420"/>
+
+          <!-- main axes -->
+          <g class="reveal r-fade d-2">
+            <line class="axis" x1="100" y1="760" x2="1040" y2="760"/>
+            <line class="axis" x1="100" y1="760" x2="100" y2="20"/>
+            <path class="axis-arrow" d="M1040 760 l-14 -6 l0 12 z"/>
+            <path class="axis-arrow" d="M100 20 l-6 12 l12 0 z"/>
+
+            <!-- X axis — extrémités + titre -->
+            <text class="axis-end" x="115" y="790" text-anchor="start">Après cuisson</text>
+            <text class="axis-end" x="1030" y="790" text-anchor="end">Pendant cuisson</text>
+            <text class="axis-title" x="555" y="830" text-anchor="middle">Moment d'intervention</text>
+
+            <!-- Y axis — extrémités + titre -->
+            <text class="axis-end" x="85" y="755" text-anchor="end">Aromatique</text>
+            <text class="axis-end" x="85" y="35" text-anchor="end">Fonctionnel</text>
+            <text class="axis-title" x="50" y="400" text-anchor="middle" transform="rotate(-90 50 400)">Logique produit</text>
+          </g>
+
+          <!-- Quadrant archetypes (orthogonaux aux axes) -->
+          <g class="reveal r-fade d-3">
+            <text class="quadrant" x="135" y="80" text-anchor="start">Routines isolées</text>
+            <text class="quadrant" x="980" y="80" text-anchor="end">Cuisson formulée</text>
+            <text class="quadrant" x="135" y="460" text-anchor="start">Aromates</text>
+            <text class="quadrant" x="980" y="460" text-anchor="end">Bases &amp; kits</text>
+          </g>
+
+          <!-- TL : Routines isolées -->
+          <g class="reveal r-fade d-4">
+            <circle class="dot muted" cx="185" cy="170" r="6"/>
+            <text class="dot-lbl" x="200" y="176">ZOE</text>
+            <circle class="dot muted" cx="290" cy="220" r="6"/>
+            <text class="dot-lbl" x="305" y="226">Viome</text>
+            <circle class="dot muted" cx="225" cy="300" r="6"/>
+            <text class="dot-lbl" x="240" y="306">Feed.</text>
+            <circle class="dot muted" cx="370" cy="260" r="6"/>
+            <text class="dot-lbl" x="385" y="266">Greens blends</text>
+          </g>
+
+          <!-- BL : Aromates traditionnels -->
+          <g class="reveal r-fade d-5">
+            <circle class="dot" cx="180" cy="540" r="6"/>
+            <text class="dot-lbl" x="195" y="546">Gomasio</text>
+            <circle class="dot" cx="280" cy="610" r="6"/>
+            <text class="dot-lbl" x="295" y="616">Furikaké</text>
+            <circle class="dot" cx="360" cy="685" r="6"/>
+            <text class="dot-lbl" x="375" y="691">Mélanges d'épices</text>
+          </g>
+
+          <!-- BR : Bases prêtes-à-cuire -->
+          <g class="reveal r-fade d-6">
+            <circle class="dot" cx="660" cy="540" r="6"/>
+            <text class="dot-lbl" x="675" y="546">Bases déshydratées</text>
+            <circle class="dot" cx="760" cy="610" r="6"/>
+            <text class="dot-lbl" x="775" y="616">One-pot · kits</text>
+            <circle class="dot" cx="850" cy="685" r="6"/>
+            <text class="dot-lbl" x="865" y="691">Levures nutritionnelles</text>
+          </g>
+
+          <!-- TR : Cuisson formulée — territoire QUINTALYS -->
+          <g class="reveal r-fade d-7">
+            <circle class="dot" cx="600" cy="320" r="6"/>
+            <text class="dot-lbl" x="615" y="326">Khalo</text>
+            <circle class="dot" cx="660" cy="360" r="6"/>
+            <text class="dot-lbl" x="675" y="366">Co.Cook</text>
+            <circle class="dot" cx="590" cy="400" r="6"/>
+            <text class="dot-lbl" x="605" y="406">B2B formulatoire</text>
+          </g>
+
+          <!-- QUINTALYS · marqueur dominant dans le quadrant cible -->
+          <g class="reveal r-zin slow d-9">
+            <circle class="korium-aura" cx="870" cy="190" r="108"/>
+            <circle class="korium-ring" cx="870" cy="190" r="86" stroke-dasharray="3 6"/>
+            <image href="assets/quintalys-glyph.png"
+                   x="804" y="120" width="132" height="76"
+                   preserveAspectRatio="xMidYMid meet"/>
+            <text class="korium-lbl" x="870" y="232" text-anchor="middle">QUINTALYS</text>
+            <text class="korium-sub" x="870" y="268" text-anchor="middle">· KORIUM ·</text>
+          </g>
+        </svg>
+      </div>
+    </div>
+
+    <div class="chrome-bottom">
+      <span class="filet"></span>
+      <span class="right">Cartographie</span>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       08 · POURQUOI KORIUM EST DIFFÉRENT
+       ============================================================ -->
+  <section class="s8v2 theme-ivory" data-screen-label="slide-08" data-label="08 Différenciation">
+
+    <div class="chrome-top">
+      <span class="num">08 / 11</span>
+      <span class="filet"></span>
+      <span class="brand">Différenciation · KORIUM</span>
+    </div>
+
+    <div class="body-wrap">
+      <div class="head">
+        <p class="eyebrow reveal r-fade d-1">Pourquoi KORIUM</p>
+        <h2 class="title reveal d-2">Trois <em>briques</em><br>qu'aucun acteur ne combine.</h2>
+      </div>
+
+      <div class="bricks">
+        <div class="brick reveal r-up d-3">
+          <div class="num">01</div>
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M7 2v6"/>
+            <path d="M17 2v6"/>
+            <path d="M5 8h14"/>
+            <path d="M6 8c0 5 2 6 2 10s-2 4-2 4h12c0 0-2 0-2-4s2-5 2-10"/>
+            <path d="M9 14c1 0 1-1 2-1s1 1 2 1 1-1 2-1"/>
+          </svg>
+          <div class="name">Cuisson intégrée</div>
+          <p class="what">Le condiment agit <b>pendant</b> la préparation, pas après. L'eau devient le milieu de diffusion.</p>
+        </div>
+
+        <div class="brick reveal r-up d-4">
+          <div class="num">02</div>
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="9"/>
+            <path d="M3 12h18"/>
+            <path d="M12 3a14 14 0 0 1 0 18"/>
+            <path d="M12 3a14 14 0 0 0 0 18"/>
+          </svg>
+          <div class="name">Lecture matrice + procédé</div>
+          <p class="what">On formule pour un <b>contexte culinaire</b>, pas seulement pour une liste d'ingrédients.</p>
+        </div>
+
+        <div class="brick reveal r-up d-5">
+          <div class="num">03</div>
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M4 19h16"/>
+            <path d="M6 19v-8l3 3 3-6 3 4 3-3v10"/>
+            <circle cx="7" cy="6" r="1.6"/>
+            <circle cx="13" cy="5" r="1.6"/>
+            <circle cx="18" cy="7" r="1.6"/>
+          </svg>
+          <div class="name">Pédagogie scientifique</div>
+          <p class="what">Une lecture <b>documentée</b> du repas, exprimée sans allégation santé.</p>
+        </div>
+      </div>
+
+      <aside class="reglementaire reveal r-fade d-6" aria-label="Positionnement réglementaire">
+        <span class="reg-label">Positionnement réglementaire</span>
+        <span class="reg-filet"></span>
+        <p class="reg-body">
+          Denrée alimentaire <em>défendable</em> au sens du règlement <b>UE&nbsp;1169/2011</b>,
+          en cohérence avec l'arrêt <b>CJUE&nbsp;C-386/23</b> du 30 avril 2025.
+        </p>
+      </aside>
+    </div>
+
+    <div class="chrome-bottom">
+      <span class="filet"></span>
+      <span class="right">Différenciation</span>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       09 · EXÉCUTION + TRACTION
+       ============================================================ -->
+  <section class="s9v2 theme-ivory" data-screen-label="slide-09" data-label="09 Exécution">
+
+    <div class="chrome-top">
+      <span class="num">09 / 11</span>
+      <span class="filet"></span>
+      <span class="brand">Exécution · Marché</span>
+    </div>
+
+    <div class="body-wrap">
+      <div class="head">
+        <p class="eyebrow reveal r-fade d-1">Exécution</p>
+        <h2 class="title reveal d-2">À l'intersection de <em>deux territoires installés.</em></h2>
+        <p class="lede reveal d-3">
+          Pas une nouvelle routine — un geste déjà connu, simplifié et redocumenté.
+        </p>
+      </div>
+
+      <div class="cards">
+        <div class="card reveal r-up d-4">
+          <div class="tag">Marché</div>
+          <div class="h">Deux dynamiques convergentes</div>
+          <p class="p">Alimentation fonctionnelle en croissance soutenue en Europe + condiments profondément installés dans les habitudes quotidiennes.</p>
+          <div class="figure">2<span class="u">Dynamiques de marché</span></div>
+        </div>
+        <div class="card reveal r-up d-5">
+          <div class="tag">Cible</div>
+          <div class="h">Trois profils prioritaires</div>
+          <p class="p">Consommateurs actifs, flexitariens, food-curieux. Sensibles à la qualité, mais recherchant simplicité d'usage.</p>
+          <div class="figure">3<span class="u">Profils prioritaires</span></div>
+        </div>
+        <div class="card reveal r-up d-6">
+          <div class="tag">Usage</div>
+          <div class="h">Un coût d'usage quotidien</div>
+          <p class="p">200&nbsp;g pour 12 à 16 préparations. Une logique premium, mais répartie sur le geste répété.</p>
+          <div class="figure">1,50 – 2 €<span class="u">par plat</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chrome-bottom">
+      <span class="filet"></span>
+      <span class="right">Exécution</span>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       10 · POURQUOI FOODSHAKER
+       ============================================================ -->
+  <section class="s10v2 theme-ivory" data-screen-label="slide-10" data-label="10 Foodshaker">
+
+    <div class="chrome-top">
+      <span class="num">10 / 11</span>
+      <span class="filet"></span>
+      <span class="brand">Pourquoi Foodshaker</span>
+    </div>
+
+    <div class="body-wrap">
+      <div class="head">
+        <p class="eyebrow reveal r-fade d-1">Accélération</p>
+        <h2 class="title reveal d-2">Trois <em>chantiers</em> prioritaires.</h2>
+        <p class="lede reveal d-3">
+          La logique scientifique et stratégique est structurée. L'enjeu : transformer cette approche en <b>produit alimentaire maîtrisé, et testable</b>.
+        </p>
+      </div>
+
+      <div class="pillars">
+        <div class="pillar reveal r-up d-4">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M9 3h6"/>
+            <path d="M10 3v6L4.2 19a2 2 0 0 0 1.7 3h12.2a2 2 0 0 0 1.7-3L14 9V3"/>
+            <path d="M6.5 14h11"/>
+          </svg>
+          <div class="num">Pilier · 01</div>
+          <div class="name">Formulation</div>
+          <p class="what">Stabilité, granulométrie, comportement en infusion-cuisson, qualité alimentaire.</p>
+        </div>
+        <div class="pillar reveal r-up d-5">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M3 3v18h18"/>
+            <path d="M7 14l4-4 4 4 6-6"/>
+            <path d="M16 8h5v5"/>
+          </svg>
+          <div class="num">Pilier · 02</div>
+          <div class="name">Food business</div>
+          <p class="what">Sourcing, panels consommateurs, intégration dans l'écosystème agroalimentaire.</p>
+        </div>
+        <div class="pillar reveal r-up d-6">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 2l8 4v6c0 5-3.5 9-8 10-4.5-1-8-5-8-10V6z"/>
+            <path d="M9 12l2 2 4-4"/>
+          </svg>
+          <div class="num">Pilier · 03</div>
+          <div class="name">Structuration</div>
+          <p class="what">Sécuriser la trajectoire entrepreneuriale. Transformer la différenciation en offre commercialisable.</p>
+        </div>
+      </div>
+
+      <p class="closing reveal d-8">
+        Foodshaker — moins un point de départ qu'un <b>accélérateur</b> adapté à la phase actuelle du projet.
+      </p>
+    </div>
+
+    <div class="chrome-bottom">
+      <span class="filet"></span>
+      <span class="right">Foodshaker</span>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       11 · CLÔTURE (saumon clair, émotion)
+       ============================================================ -->
+  <section class="s11v2 theme-tips" data-screen-label="slide-11" data-label="11 Clôture">
+
+    <div class="chrome-top">
+      <span class="num reveal r-fade d-2">11 / 11</span>
+      <span class="filet reveal r-fade d-2"></span>
+      <span class="brand reveal r-fade d-2">Clôture · Merci</span>
+    </div>
+
+    <div class="closing">
+      <div class="plume reveal r-fade d-3">
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </div>
+
+      <p class="line reveal d-5">Des condiments pensés autour des interactions culinaires du repas 
+un geste simple, documenté, intégré au quotidien.</p>
+
+      <div class="sig reveal d-7">
+        <div class="filet"></div>
+        <div class="by">Une approche</div>
+        <div class="mark"></div>
+        <div class="small">Noelly Sterlin · Foodshaker · 2026</div>
+      </div>
+    </div>
+
+    <div class="chrome-bottom">
+      <span class="reveal r-fade d-9">Quintexor</span>
+      <span class="filet reveal r-fade d-9"></span>
+      <span class="right reveal r-fade d-9">Merci</span>
+    </div>
+  </section>
+
+</deck-stage>
+
+<!-- Scripts — single-file stable : web components vanilla uniquement -->
+<script src="deck-stage.js"></script>
+<script src="image-slot.js"></script>
+
+<!-- Build steps : éléments .build-hold révélés au clic/touche, pas au changement de diapo -->
+<script>
+(() => {
+  const stage = document.querySelector('deck-stage');
+  if (!stage) return;
+
+  let currentSlide = null;
+
+  const pending = () => currentSlide
+    ? [...currentSlide.querySelectorAll('.build-hold:not(.build-shown)')]
+    : [];
+
+  const advanceBuild = () => {
+    const list = pending();
+    if (!list.length) return false;
+    list[0].classList.add('build-shown');
+    return true;
+  };
+
+  stage.addEventListener('slidechange', (e) => {
+    // Reset builds when entering a slide (so going back/forward replays cleanly)
+    if (currentSlide) {
+      currentSlide.querySelectorAll('.build-hold.build-shown')
+        .forEach(el => el.classList.remove('build-shown'));
+    }
+    currentSlide = e.detail.slide || null;
+    if (currentSlide) {
+      currentSlide.querySelectorAll('.build-hold.build-shown')
+        .forEach(el => el.classList.remove('build-shown'));
+    }
+  });
+
+  // Keyboard : intercept advance keys when a build is pending on this slide
+  window.addEventListener('keydown', (e) => {
+    if (e.key !== 'ArrowRight' && e.key !== ' ' && e.key !== 'PageDown') return;
+    if (e.target && /^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName)) return;
+    if (advanceBuild()) {
+      e.stopImmediatePropagation();
+      e.preventDefault();
+    }
+  }, true);
+
+  // Click : same logic for tap-to-advance
+  window.addEventListener('click', (e) => {
+    if (!currentSlide) return;
+    const path = e.composedPath();
+    if (!path.includes(currentSlide)) return;
+    // Don't swallow clicks on real interactive chrome
+    if (path.some(n => n.tagName && /^(BUTTON|A|INPUT|SELECT|TEXTAREA|SUMMARY)$/.test(n.tagName))) return;
+    if (advanceBuild()) {
+      e.stopImmediatePropagation();
+      e.preventDefault();
+    }
+  }, true);
+})();
+</script>
+
 </body>
 </html>
