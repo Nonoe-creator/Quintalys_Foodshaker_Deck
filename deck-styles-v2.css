@@ -346,7 +346,7 @@ image-slot {
 .s2v2 .half {
   position: relative;
   display: flex; flex-direction: column; justify-content: flex-end;
-  padding: 130px 90px 250px;
+  padding: 160px 90px 160px;
 }
 .s2v2 .half.r { background: var(--sage-bg); }
 .s2v2 .photo {
@@ -385,7 +385,6 @@ image-slot {
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--text-secondary);
-  white-space: nowrap;
 }
 .s2v2 .half.r .micro { color: color-mix(in oklab, var(--sage-text) 70%, transparent); }
 
@@ -422,47 +421,6 @@ image-slot {
   color: var(--copper-logo);
 }
 
-/* — bandeau statistique (révélé au 1er clic, avant la question) — */
-.s2v2 .stat-band {
-  position: absolute;
-  left: 50%; bottom: 56px;
-  transform: translateX(-50%);
-  z-index: 4;
-  display: flex;
-  align-items: center;
-  gap: 30px;
-  padding: 22px 42px;
-  background: var(--ivory);
-  border: 1px solid var(--gold);
-  border-radius: var(--radius-sm);
-  box-shadow: 0 10px 34px rgba(34,16,8,0.12);
-  white-space: nowrap;
-}
-.s2v2 .stat-band .stat-num {
-  font-family: var(--font-serif);
-  font-weight: 600;
-  font-size: calc(96px * var(--base-scale));
-  line-height: 0.9;
-  color: var(--copper-logo);
-  letter-spacing: -0.01em;
-}
-.s2v2 .stat-band .stat-num .pct {
-  font-size: 0.5em;
-  vertical-align: 0.18em;
-  margin-left: 2px;
-}
-.s2v2 .stat-band .stat-filet {
-  width: 1px;
-  align-self: stretch;
-  background: var(--gold);
-}
-.s2v2 .stat-band .stat-text {
-  font-family: var(--font-serif);
-  font-style: italic;
-  font-size: calc(30px * var(--base-scale));
-  line-height: 1.3;
-  color: var(--structure-strong);
-}
 
 /* ================================================================
    SLIDE 3 — CUISINE = FORMULATION (schéma culinaire sur sauge)
