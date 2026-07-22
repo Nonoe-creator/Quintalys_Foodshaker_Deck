@@ -1,0 +1,79 @@
+=== V3 81gebo REBUILD (2026-07-22) key UUIDs ===
+PAGE 1 (preserved):
+  consent Q = 9f6e6906-86da-45eb-b58d-06d698683735 ; "Je participe" = 8f2cdf95-e30a-4d0a-a4de-6852c4af32fe
+  calc concept_order_final = 0f6debe2-fc6c-4a48-9492-394832aa0066 (default v1)
+  calc cooking_path = f8498a80-213c-4d04-9afa-86a519c6552e (default regular_cooking)
+  hidden concept_order = 285cfee7-4eb0-4935-ac3d-43e4701d18f3
+  KEEP rule 8dfbf196 (CALCULATE concept_order_final=v2)
+  4 card-SHOW rules to RETARGET: 5c94b2e0(v1), 7970afaf(v1), a1cecc9d(v2), 5870d415(v2)
+  page1 last block (batch1 anchor) = a694dfa2
+
+BATCH 1 (pages 2-9):
+  cook_relation LINEAR Q = 8387f025-5971-4d01-a2ca-c60f2f3fc5e5
+  cook_freq Q = 69789b56-8365-4b92-b65b-8ecc721e3324 ; Jamais = 6e20bae9-1a71-4d54-9857-ef5b44fdf815
+  bases_cooked Q = d157c1ad-f7d5-45ff-bdfd-ceb45185f48f ; Riz blanc = 38124853
+  addins_during Q(page5) = 96b3a44f-d5a2-4d8c-9190-aab8e37ff814
+  addins_after Q = 6096db0f-d67f-4bf8-bdf2-aa85966b58b1
+  after_add_motivation Q = db7fa0a6-b074-4061-9d0a-0e56d63ef93d
+  friction Q = b805de0a-1315-471c-9507-ba58d1477ca1
+  better_eating LINEAR Q = 23c3c1a8-b8b4-4750-b3ea-ad9a0a6b063e
+  practical LINEAR Q = a34f6e9d-41e8-42df-811c-c213d52d7d02
+  cooking_change_profile Q = 6b206780-6416-4008-afbc-2eac677a1ee3
+  time_pressure Q = 58614bac-da35-48eb-bb50-60678538fddc
+  page9 last block (batch2 anchor) = 9ecbb60c-2a3b-4a54-843d-9cf2c39b6e29
+
+BATCH 2 (pages 10-16):
+  CARDS (hide + retarget): card_A_infuser(v1)=a4702ac3-3858-4596-9ac9-7b7491fb0fc9
+    card_A_ajouter(v2)=cd334786-b811-45ce-8592-31ebc0c75441
+    card_B_ajouter(v1)=63084d55-9a71-416f-80e8-afe9cd6b72dc
+    card_B_infuser(v2)=68e6791a-6d91-483a-a7d0-598853f1a516
+  RETARGET map: 5c94b2e0->a4702ac3(v1 A infuser); 7970afaf->63084d55(v1 B ajouter);
+                a1cecc9d->cd334786(v2 A ajouter); 5870d415->68e6791a(v2 B infuser)
+  impressions Q = 3e09d355-3f02-4dc8-9e5d-ecc66639a705  (checkbox, max3)
+  spontaneous_name Q = 21f9dab5-b0fc-4eb8-befd-2662b79beaf5 (input_text)
+  expected_category Q = 9da35fee-8c67-4381-8435-f293997e16f3
+  evalA matrix Q = 78db7b1c-d938-466b-bca1-63989b47260b ; trialrowA=e9d98887
+  evalB matrix Q = fff033b1-f5df-4e83-a7b3-d336962d1d7a ; trialrowB=2b12f835
+  pref Q = 076b377a-ebc3-434a-9c2f-12029173c842 (A=cd7b3a43,B=e19cdc59,deux=ef34a13d,aucune=8c730d62)
+  first_purchase Q = 80aecd89-eb2b-4344-b4be-31f61a90eaa9 (A=186ebdc3,B=cca5c9d4,gout=b04a92e4,prix=2fb09062,nsp=97db6012)
+  pref_reason TEXTAREA block = 119b88e6-a944-4145-821d-43320ab43935  (batch3 anchor)
+
+BATCH 3 (pages 17-22):
+  primary_value Q = 230304ab-680c-4d49-8197-68413a3c3a31
+  integration Q = eaf7b32b-2f72-4a00-b1a1-c9ce3a89da70
+  nutrition_natural LINEAR Q = 8538a5d2-4f70-45c1-bd25-3ac9490e35ec
+  nutrition_matrix Q = 6f062515-5540-4cdf-9958-034df1c42e17 (fibres=eb96353d,mag=04b6fe03,fer=56227ad3) randomizeRows=true
+  nutrition_priority Q = fe85a237-3e93-4224-a008-1586cb31c048
+  minerals_reaction Q = 9aa7ca82-42bc-42f9-b3c5-e37ac06fa23b ; mefiant=70de1def-abc7-4e84-a6b8-7182ba1dd3ff
+  minerals_concern Q = d5ff8c6c-fd3c-4a43-a997-5446f22456ea (optional, SHOW when mefiant)
+  page22 last block (batch4 anchor) = ed539c3e-b308-45ea-a3e5-0706429e8468
+
+BATCH 4 (pages 23-31):
+  familles Q = 88a7beb8-733c-4e26-9b2c-36082561fbeb
+    Algues=da375062-8a1c-4867-9a5d-a5e581e283b5 ; Legumes_seches=1c2e08af-98d3-4d58-9e8a-37c57d6589fc
+    Champignons=2558b5f7-40ab-433e-a4f5-5f8de160860d ; Fleurs=fede7833-4d72-46d6-a852-0dd02abb5ceb
+    Aucune(exclusive)=d8edfeda-2b11-4fb4-bc50-68e8583f1d2e
+  deepdive algues: benefit Q=6f215446-f62c-4dae-8adb-b38b54220ae4 ; barrier Q=5a309977-9917-48c9-9c6b-2a4d5afd965c
+  deepdive champignons: benefit Q=5ab2ad6c-3c8f-4a10-af95-a2b807a5806c ; barrier Q=a510fd5a-f4d3-4902-bc86-cc3b3f211ab2
+  deepdive legumes: benefit Q=1409cb76-bfc4-4842-b2e2-7e2f0b000c21 ; barrier Q=7cb257b8-8e88-45ae-94d5-3c4db5bd53df
+  deepdive fleurs: benefit Q=3d5a133b-1a81-4605-a1f3-5ccb1deb3f9d ; barrier Q=292a83bb-204d-4fb5-a68b-5da31d340ee6
+  ranking Q = a34343cf-36e2-4bd9-b543-3fdc89421678
+  trust Q = cd45547d-eded-47d5-9352-fceba517929b (max3)
+  freins Q = 4e10918f-7b7b-4db0-94c0-f1f4ee4696d8 ; pas_de_frein(exclusive)=4887047b-0f67-4fa9-b091-36a9d1add42e (max3)
+  comparable Q = 983b998f-8221-47ae-99c0-3034d67a29ed
+  page31 last block (batch5 anchor) = 400ec380-73e8-48bc-9492-02c37671c554
+
+BATCH 5 (pages 32-39):
+  format_choice Q = f6316932-0a9a-471b-9001-14cf68074a37 ; pot=126690a1-4561-431b-9ec3-5131f656404a ; boite=faea4553-2fbf-4b0b-88dc-06f06e272fa9
+  pot recall TEXT = ae180b82-169a-409f-b08d-fc757d3d6a51
+  pot VW Q (title): tooCheap=e5145d7b ; cheap=c8f565b7 ; expensive=4d570c79 ; tooExp=fc94c669
+  pot VW num blocks: 2bd8bba9, bb7f3f36, 8464500a, 1b8ea73a
+  boite recall TEXT = 31bb208a-b94f-42c5-9b24-128af57f3a31
+  boite VW Q (title): tooCheap=a5997cdf ; cheap=e870431a ; expensive=6c1fcf64 ; tooExp=9ea7bb0c
+  boite VW num blocks: 5bedeb36, db4a7620, a414374c, f4211588
+  intent Q = ba339255-05f1-4edb-8f32-308f37b74508
+  usage Q = a50986dd-35aa-4801-b988-4b22a66ac803
+  recontact Q = 2cb3bf73-b5fa-4443-8e57-02c0e356b507 ; Oui=fe8ec80d-6737-4c84-87e0-15de15c0d7c2 ; Non=b0311227-8a9d-4bcb-8b97-9aaff328caff
+  email input block = 4cfbf359-b2be-45e1-83bf-73176e0abc43 (optional)
+  LINEAR blocks: cook_relation=db726110 ; better_eating=4cbb212a ; practical=3910b76f ; nutrition_natural=940a3c8e
+  concept cards to HIDE: a4702ac3, cd334786, 63084d55, 68e6791a
